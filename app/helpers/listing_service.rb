@@ -92,7 +92,7 @@ module ListingService
     request = Net::HTTP::Get.new(uri.request_uri)
     request["User-Agent"] = USER_SERVICE[:user_agent]
     request["Accept"] = USER_SERVICE[:accept]
-    request["Authorization"] = "bearer "+USER_SERVICE[:auth_token]
+    # request["Authorization"] = "bearer "+USER_SERVICE[:auth_token]
 
     response = http.request(request)
     return (JSON.parse(response.body))
