@@ -18,14 +18,14 @@ module ListingService
     response = http.request(request)
 
     listings=JSON.parse(response.body)
-
+    user_details=get_user_details(listing["listing_listed_by"])
     unless listings["active_listings"].nil?
       listings["active_listings"].each do |listing|
-        #listing["listing_brick_details"]=get_listing_brick_details(listing["listing_id"])
+        listing["listing_brick_details"]=get_listing_brick_details(listing["listing_id"])
         listing["listing_location_id"]=get_location_details(listing["listing_location_id"])
         listing["boundary_polygon"]=""
         listing["formatted_price_per_unit"]=""
-        #listing["listing_listed_by"]=get_user_details(listing["listing_listed_by"])
+        listing["listing_listed_by"]=user_details
       end
     end
     puts "Complete Listing Info #{listings}"
@@ -34,14 +34,14 @@ module ListingService
 
   def self.get_listing_brick_details(listing_id)
     base_uri=URI.parse(BRICK_SERVICE[:url])
-    query_string="/#{listing_id}"
+    query_string="/projects?listing_id=#{listing_id}"
     uri=base_uri+query_string
     puts 'Request URL for Brick Service'
     puts "Complete URI #{uri}"
 
     http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    #http.use_ssl = true
+    #http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     request = Net::HTTP::Get.new(uri.request_uri)
     request["User-Agent"] = BRICK_SERVICE[:user_agent]
     request["Accept"] = BRICK_SERVICE[:accept]
@@ -67,7 +67,9 @@ module ListingService
 
     response = http.request(request)
 
-    return (JSON.parse(response.body))
+    response = JSON.parse(response.body)
+    response["boundary_polygon"]=""
+    return response
   end
 
   def self.get_user_details(user_id)

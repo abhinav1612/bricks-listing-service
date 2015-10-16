@@ -4,7 +4,7 @@ development:
   accept: "application/json; version=1"
   user_agent: "Bricks-Listing-Service"
  brick_service:
-  url: "https://listings-dev.plotandland.com/listings"
+  url: "http://bricks.plotandland.com/projects"
   accept: "application/json; version=1"
   user_agent: "Bricks-Listing-Service"
  location_service:
