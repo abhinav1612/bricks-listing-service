@@ -18,7 +18,7 @@ module ListingService
     response = http.request(request)
 
     listings=JSON.parse(response.body)
-    user_details=get_user_details(listing["listing_listed_by"])
+    user_details=get_user_details(user_id)
     unless listings["active_listings"].nil?
       listings["active_listings"].each do |listing|
         listing["listing_brick_details"]=get_listing_brick_details(listing["listing_id"])
