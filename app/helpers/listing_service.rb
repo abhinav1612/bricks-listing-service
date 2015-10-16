@@ -3,8 +3,8 @@ module ListingService
 
   def self.get_land_listing(user_id)
     base_uri=URI.parse(PLOT_LAND_LISTING_SERVICE[:url])
-    query_string+='?page=1&per_page=3&view=mobile&listed_by='
-    uri=base_uri+query_string+user_id
+    query_string="?page=1&per_page=3&view=mobile&listed_by=#{user_id}"
+    uri=base_uri+query_string
     puts 'Request URL for Plot-Land Listing Service'
     puts "Complete URI #{uri}"
 
@@ -22,7 +22,7 @@ module ListingService
     unless listings["active_listings"].nil?
       listings["active_listings"].each do |listing|
         #listing["listing_brick_details"]=get_listing_brick_details(listing["listing_id"])
-        listing["location_id"]=get_location_details(listing["location_id"])
+        listing["listing_location_id"]=get_location_details(listing["listing_location_id"])
         #listing["listing_listed_by"]=get_user_details(listing["listing_listed_by"])
       end
     end
@@ -51,7 +51,7 @@ module ListingService
 
   def self.get_location_details(location_id)
     base_uri=URI.parse(LOCATION_SERVICE[:url])
-    query_string="/#{location_id}?fields=name"
+    query_string="/locations/#{location_id}?fields=name"
     uri=base_uri+query_string
     puts 'Request URL for Location Service'
     puts "Complete URI #{uri}"

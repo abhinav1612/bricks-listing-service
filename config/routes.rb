@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'listings' => 'listings#complete_amenities'
+  get 'listings' => 'listings#listing_compete_details'
 
 end
