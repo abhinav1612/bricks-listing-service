@@ -18,15 +18,15 @@ module ListingService
     response = http.request(request)
 
     listings=JSON.parse(response.body)
-    user_details=get_user_details(user_id)
+    user_details=get_user_details(user_id) rescue nil
     unless listings["active_listings"].nil?
       listings["active_listings"].each do |listing|
-        listing["listing_brick_details"]=get_listing_brick_details(listing["listing_id"])
-        listing["listing_location_id"]=get_location_details(listing["listing_location_id"])
+        listing["listing_brick_details"]=get_listing_brick_details(listing["listing_id"]) rescue nil
+        listing["listing_location_id"]=get_location_details(listing["listing_location_id"]) rescue nil
         listing["boundary_polygon"]=""
         listing["formatted_price_per_unit"]=""
-        listing["listing_listed_by"]=user_details
-        listing["booking_details"]=get_booking_details(listing["listing_id"],listing)
+        listing["listing_listed_by"]=user_details rescue nil
+        listing["booking_details"]=get_booking_details(listing["listing_id"],listing) rescue nil
       end
     end
     puts "Complete Listing Info #{listings}"
@@ -48,14 +48,10 @@ module ListingService
     request["Accept"] = BRICK_SERVICE[:accept]
 
     response = http.request(request)
-    brick_details=JSON.parse(response.body)
-    brick_detail=""
-    brick_details.each do |temp|
-      brick_detail=temp
-      break
-    end
 
-    return brick_detail
+    brick_details=JSON.parse(response.body,:symbolize_keys => true)
+
+    return brick_details[0] rescue nil
   end
 
   def self.get_location_details(location_id)
@@ -122,14 +118,13 @@ module ListingService
     unless booking_details.nil?
       booking_details.each do |booking_detail|
         total_investors=total_investors+1
-        total_amount_raised=total_amount_raised+booking_detail["total_amount"].to_i
-        total_bricks_sold=total_bricks_sold+booking_detail["number_of_bricks"].to_i
+        total_amount_raised=unless booking_details["total_amount"].nil? total_amount_raised+booking_detail["total_amount"].to_i; end rescue 0
+        total_bricks_sold=unless booking_details["number_of_bricks"].nil? total_bricks_sold+booking_detail["number_of_bricks"].to_i; end rescue 0
       end
     end
     listing["total_investors"]=total_investors
     listing["amount_raised"]=total_amount_raised
     listing["bricks_sold"]=total_bricks_sold
-    puts "#{booking_details}"
     return booking_details
   end
 
