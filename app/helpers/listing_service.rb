@@ -74,7 +74,7 @@ module ListingService
 
   def self.get_user_details(user_id)
     base_uri=URI.parse(USER_SERVICE[:url])
-    query_string="/#{location_id}?fields=name"
+    query_string="users/#{user_id}"
     uri=base_uri+query_string
     puts 'Request URL for Location Service'
     puts "Complete URI #{uri}"
