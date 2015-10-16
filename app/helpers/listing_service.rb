@@ -48,8 +48,14 @@ module ListingService
     request["Accept"] = BRICK_SERVICE[:accept]
 
     response = http.request(request)
+    brick_details=JSON.parse(response.body)
+    brick_detail=""
+    brick_details.each do |temp|
+      brick_detail=temp
+      break
+    end
 
-    return (JSON.parse(response.body))
+    return brick_detail
   end
 
   def self.get_location_details(location_id)
