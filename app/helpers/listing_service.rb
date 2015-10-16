@@ -23,6 +23,8 @@ module ListingService
       listings["active_listings"].each do |listing|
         #listing["listing_brick_details"]=get_listing_brick_details(listing["listing_id"])
         listing["listing_location_id"]=get_location_details(listing["listing_location_id"])
+        listing["boundary_polygon"]=""
+        listing["formatted_price_per_unit"]=""
         #listing["listing_listed_by"]=get_user_details(listing["listing_listed_by"])
       end
     end
