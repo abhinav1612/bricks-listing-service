@@ -16,6 +16,10 @@ development:
    accept: "application/json; version=1"
    user_agent: "Bricks-Listing-Service"
    auth_token: <%= ENV['USER_AUTH_TOKEN'] %>
+ brick_service:
+   url: "http://bookings.plotandland.com/bookings"
+   accept: "application/json; version=1"
+   user_agent: "Bricks-Listing-Service"
 
 test:
  plot_listing_service:

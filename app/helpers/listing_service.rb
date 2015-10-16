@@ -26,6 +26,7 @@ module ListingService
         listing["boundary_polygon"]=""
         listing["formatted_price_per_unit"]=""
         listing["listing_listed_by"]=user_details
+        listing["booking_details"]=get_booking_details(listing["listing_id"],listing)
       end
     end
     puts "Complete Listing Info #{listings}"
@@ -76,7 +77,7 @@ module ListingService
     base_uri=URI.parse(USER_SERVICE[:url])
     query_string="users/#{user_id}"
     uri=base_uri+query_string
-    puts 'Request URL for Location Service'
+    puts 'Request URL for User Service'
     puts "Complete URI #{uri}"
 
     http = Net::HTTP.new(uri.host, uri.port)
@@ -89,6 +90,41 @@ module ListingService
 
     response = http.request(request)
     return (JSON.parse(response.body))
+  end
+
+  def self.get_booking_details(listing_id,listing)
+    #http://bookings.plotandland.com/bookings?project_id=2
+    base_uri=URI.parse(BOOKING_SERVICE[:url])
+    query_string="/bookings?project_id=#{listing_id}"
+    uri=base_uri+query_string
+    puts 'Request URL for Booking Service'
+    puts "Complete URI #{uri}"
+
+    http = Net::HTTP.new(uri.host, uri.port)
+    #http.use_ssl = true
+    #http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    request = Net::HTTP::Get.new(uri.request_uri)
+    request["User-Agent"] = BOOKING_SERVICE[:user_agent]
+    request["Accept"] = BOOKING_SERVICE[:accept]
+
+    response = http.request(request)
+    booking_details=JSON.parse(response.body)
+
+    total_investors=0
+    total_amount_raised=0
+    total_bricks_sold=0
+    unless booking_details.nil?
+      booking_details.each do |booking_detail|
+        total_investors=total_investors+1
+        total_amount_raised=total_amount_raised+booking_detail["total_amount"].to_i
+        total_bricks_sold=total_bricks_sold+booking_detail["number_of_bricks"].to_i
+      end
+    end
+    listing["total_investors"]=total_investors
+    listing["amount_raised"]=total_amount_raised
+    listing["bricks_sold"]=total_bricks_sold
+    puts "#{booking_details}"
+    return booking_details
   end
 
 end

@@ -5,3 +5,5 @@ BRICK_SERVICE = Rails.application.config_for(:services)['brick_service'].symboli
 LOCATION_SERVICE = Rails.application.config_for(:services)['location_service'].symbolize_keys
 
 USER_SERVICE = Rails.application.config_for(:services)['user_service'].symbolize_keys
+
+BOOKING_SERVICE = Rails.application.config_for(:services)['booking_service'].symbolize_keys
