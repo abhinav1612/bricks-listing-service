@@ -1,0 +1,57 @@
+development:
+ plot_listing_service:
+  url: "https://listings-dev.plotandland.com/listings"
+  accept: "application/json; version=1"
+  user_agent: "Bricks-Listing-Service"
+ brick_service:
+  url: "https://listings-dev.plotandland.com/listings"
+  accept: "application/json; version=1"
+  user_agent: "Bricks-Listing-Service"
+ location_service:
+  url: "https://locations-dev.plotandland.com/locations"
+  accept: "application/json; version=1"
+  user_agent: "Bricks-Listing-Service"
+ user_service:
+   url: "https://users-dev.plotandland.com/users"
+   accept: "application/json; version=1"
+   user_agent: "Bricks-Listing-Service"
+   auth_token: <%= ENV['USER_AUTH_TOKEN'] %>
+
+test:
+ plot_listing_service:
+  url: "https://listings-dev.plotandland.com/listings"
+  accept: "application/json; version=1"
+  user_agent: "Bricks-Listing-Service"
+ brick_service:
+   url: "https://listings-dev.plotandland.com/listings"
+   accept: "application/json; version=1"
+   user_agent: "Bricks-Listing-Service"
+ location_service:
+   url: "https://locations-dev.plotandland.com/locations"
+   accept: "application/json; version=1"
+   user_agent: "Bricks-Listing-Service"
+ user_service:
+    url: "https://users-dev.plotandland.com/users"
+    accept: "application/json; version=1"
+    user_agent: "Bricks-Listing-Service"
+    auth_token: <%= ENV['USER_AUTH_TOKEN'] %>
+
+
+production:
+ plot_listing_service:
+  url: "https://listings-dev.plotandland.com/listings"
+  accept: "application/json; version=1"
+  user_agent: "Bricks-Listing-Service"
+ brick_service:
+   url: "https://listings-dev.plotandland.com/listings"
+   accept: "application/json; version=1"
+   user_agent: "Bricks-Listing-Service"
+ location_service:
+   url: "https://locations-dev.plotandland.com/locations"
+   accept: "application/json; version=1"
+   user_agent: "Bricks-Listing-Service"
+ user_service:
+    url: "https://users-dev.plotandland.com/users"
+    accept: "application/json; version=1"
+    user_agent: "Bricks-Listing-Service"
+    auth_token: <%= ENV['USER_AUTH_TOKEN'] %>
