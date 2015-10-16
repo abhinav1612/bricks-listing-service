@@ -51,7 +51,7 @@ module ListingService
 
     brick_details=JSON.parse(response.body,:symbolize_keys => true)
 
-    return brick_details[0] rescue nil
+    return brick_details['projects'][0] rescue nil
   end
 
   def self.get_location_details(location_id)
